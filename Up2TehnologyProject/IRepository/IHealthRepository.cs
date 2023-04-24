@@ -2,6 +2,6 @@
 {
     public interface IHealthRepository
     {
-        public void FetchDataFromEndpoint();
+        public Task<HttpResponseMessage> FetchDataFromEndpointAsync();
     }
 }

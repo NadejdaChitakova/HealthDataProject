@@ -12,7 +12,9 @@
         public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string url)
         {
             Uri requestUri = new Uri(url);
-            return await SendRequest(httpMethod, url);
+            var httpRequestMsg = new HttpRequestMessage(httpMethod, requestUri);
+
+            return _httpClient.Send(httpRequestMsg);
         }
     }
 }
