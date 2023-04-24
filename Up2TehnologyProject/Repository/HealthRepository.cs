@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Up2TehnologyProject.ClientApi;
+﻿using Up2TehnologyProject.ClientApi;
 using Up2TehnologyProject.IRepository;
 
 namespace Up2TehnologyProject.Repository
@@ -8,9 +6,12 @@ namespace Up2TehnologyProject.Repository
     public class HealthRepository : IHealthRepository
     {
         private readonly BaseApi _baseApi;
-        public HealthRepository(BaseApi baseApi)
+        private IConfiguration _configuration;
+
+        public HealthRepository(BaseApi baseApi, IConfiguration configuration)
         {
             _baseApi = baseApi;
+            _configuration = configuration;
         }
 
         public Task<HttpResponseMessage> FetchDataFromEndpointAsync()
@@ -25,6 +26,10 @@ namespace Up2TehnologyProject.Repository
             return response;
         }
 
-        private string GetEndpointUrl() => "https://feber.paxx.up2technology.com/health";
+        private string GetEndpointUrl()
+        {
+            string url = _configuration.GetValue<string>("HealthCheckUrl");
+            return url;
+        }
     }
 }
